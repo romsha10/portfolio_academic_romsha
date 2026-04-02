@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Romsha Ahlawat : Academic Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+    <style>
+        /* ── TOKENS ─────────────────────────────────────────── */
+        :root {
+            --bg: #f7f6f2;
+            --surface: #ffffff;
+            --border: #e2ddd8;
+            --accent: #6c5ce7;
+            --accent2: #2a5c8f;
+            --text: #1a1a1a;
+            --muted: #7a7570;
+            --serif: 'DM Serif Display', serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'Outfit', sans-serif;
+            --max: 1180px;
+            --r: 12px;
+        }
+
+        /* ── RESET & NOISE ── */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+            opacity: .18;
+        }
+
+        .grid-bg {
+            position: fixed;
+            inset: 0;
+            background-image: linear-gradient(rgba(42, 92, 143, .04) 1px, transparent 1px), linear-gradient(90deg, rgba(42, 92, 143, .04) 1px, transparent 1px);
+            background-size: 48px 48px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: 0;
+            opacity: .10;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: var(--accent);
+            top: -200px;
+            right: -100px;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: var(--accent2);
+            bottom: 0;
+            left: -150px;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 0 2rem;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            backdrop-filter: blur(20px);
+            background: rgba(247, 246, 242, .85);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+            font-family: var(--mono);
+            font-size: .9rem;
+            color: var(--accent);
+            letter-spacing: .05em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: .85rem;
+            font-weight: 500;
+            color: var(--muted);
+            text-transform: uppercase;
+            transition: color .2s;
+            text-decoration: none;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* ── HERO ── */
+        #hero {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            padding-top: 100px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-inner {
+            max-width: var(--max);
+            margin: 0 auto;
+            padding: 0 2rem;
+            width: 100%;
+        }
+
+        .hero-name {
+            font-family: var(--serif);
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 1.05;
+            margin-bottom: 1rem;
+        }
+
+        .hero-name em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .hero-title {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            color: var(--muted);
+            font-weight: 300;
+            max-width: 700px;
+            margin-bottom: 3rem;
+        }
+
+        .hero-title strong {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        /* ── BUTTONS ── */
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            padding: .75rem 1.75rem;
+            border-radius: var(--r);
+            font-size: .9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(108, 92, 231, 0.2);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* ── SECTIONS ── */
+        .section {
+            max-width: var(--max);
+            margin: 0 auto;
+            padding: 6rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .sec-label {
+            font-family: var(--mono);
+            font-size: .75rem;
+            color: var(--accent);
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .sec-heading {
+            font-family: var(--serif);
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .sec-heading em {
+            font-style: italic;
+            color: var(--accent2);
+        }
+
+        /* ── TEACHING GRID ── */
+        .teach-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .teach-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 2rem;
+            transition: 0.3s;
+        }
+
+        .teach-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .teach-card p {
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        .teach-level {
+            display: inline-block;
+            margin-top: 1.5rem;
+            font-family: var(--mono);
+            font-size: .65rem;
+            color: var(--accent2);
+            padding: .2rem .6rem;
+            background: rgba(42, 92, 143, .06);
+            border-radius: 100px;
+            border: 1px solid rgba(42, 92, 143, 0.1);
+        }
+
+        /* ── SKILLS MINIMAL ── */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .skill-list {
+            list-style: none;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .skill-list li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-list li::before {
+            content: "•";
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* ── PROJECTS ── */
+        .project-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            transition: 0.3s;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .project-skills {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            color: var(--accent2);
+            margin-top: 1rem;
+        }
+
+        .project-link {
+            font-size: 0.85rem;
+            color: var(--accent);
+            text-decoration: underline;
+            font-weight: 500;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            padding: 4rem 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        @media (max-width: 768px) {
+            .hero-name {
+                font-size: 3.5rem;
+            }
+
+            .hero-inner {
+                padding-top: 50px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="grid-bg"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <nav>
+        <div class="nav-logo">// romsha.ahlawat</div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#teaching">Teaching</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="hero">
+            <div class="hero-inner">
+                <h1 class="hero-name">Romsha<br><em>Ahlawat</em></h1>
+                <p class="hero-title">
+                    <strong>Postgraduate in Data Science (MSc)</strong> : Focused on educational excellence in Data
+                    Science and Computer Engineering for the next generation of students.
+                </p>
+                <div class="hero-cta">
+                    <a href="mailto:ahlawatromsha@gmail.com" class="btn btn-primary">Connect via Email</a>
+                    <a href="https://www.linkedin.com/in/romshaahlawat/" target="_blank" class="btn btn-ghost">LinkedIn
+                        Profile</a>
+                    <a href="https://github.com/romsha10" target="_blank" class="btn btn-ghost">GitHub</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="section">
+            <div class="sec-label">Background</div>
+            <h2 class="sec-heading">Educator.<br><em>Analyst.</em><br>Technologist.</h2>
+            <div style="max-width: 750px; color: var(--muted);">
+                <p style="margin-bottom: 1.5rem;">Pursuing an <strong>MSc in Data Science at the University of
+                        Glasgow</strong>, my objective is to contribute to higher education teaching by making complex
+                    technical concepts accessible at both School and Undergraduate levels.</p>
+                <p>With a <strong>9.2 CGPA</strong> in B.Tech Computer Science and professional experience as a Content
+                    Analyst, I bring a disciplined, student-centric approach to curriculum delivery and academic
+                    development.</p>
+            </div>
+        </section>
+
+        <section id="teaching" class="section">
+            <div class="sec-label">Teaching Portfolio</div>
+            <h2 class="sec-heading">Areas of <em>Teaching</em> Interest</h2>
+            <div class="teach-grid">
+                <div class="teach-card">
+                    <h3>Data Science & Analytics</h3>
+                    <p>Insight derivation and data wrangling.</p><span class="teach-level">School & UG Level</span>
+                </div>
+                <div class="teach-card">
+                    <h3>Python Programming</h3>
+                    <p>Foundations and scientific libraries.</p><span class="teach-level">School & UG Level</span>
+                </div>
+                <div class="teach-card">
+                    <h3>Machine Learning Fundamentals</h3>
+                    <p>Supervised and Unsupervised learning.</p><span class="teach-level">School & UG Level</span>
+                </div>
+                <div class="teach-card">
+                    <h3>Database Management Systems</h3>
+                    <p>SQL and Relational design.</p><span class="teach-level">School & UG Level</span>
+                </div>
+                <div class="teach-card">
+                    <h3>Statistics for Computing</h3>
+                    <p>Computational probability and logic.</p><span class="teach-level">School & UG Level</span>
+                </div>
+                <div class="teach-card">
+                    <h3>Artificial Intelligence (Intro)</h3>
+                    <p>History and basic AI logic.</p><span class="teach-level">School & UG Level</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="section">
+            <div class="sec-label">Technical Skills</div>
+            <h2 class="sec-heading">Technical <em>Competencies</em></h2>
+            <div class="skills-grid">
+                <div>
+                    <h4 style="font-family: var(--mono); font-size: 0.8rem; margin-bottom: 1rem;">LANGUAGES & DATA</h4>
+                    <ul class="skill-list">
+                        <li>Python</li>
+                        <li>SQL</li>
+                        <li>Aritificial Intelligence (Introductory)</li>
+                        <li>EDA</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="font-family: var(--mono); font-size: 0.8rem; margin-bottom: 1rem;">TOOLS & FRAMEWORKS
+                    </h4>
+                    <ul class="skill-list">
+                        <li>Power BI & Tableau</li>
+                        <li>DAX & Power Query</li>
+                        <li>HTML & CSS</li>
+                        <li>JavaScript</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section">
+            <div class="sec-label">Portfolio</div>
+            <h2 class="sec-heading">Projects & <em>Research</em></h2>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Crypto Currency Growth Analysis</h3>
+                    <a href="https://github.com/romsha10/CryptoCurrencyDataAnalysis" class="project-link"
+                        target="_blank">View GitHub</a>
+                </div>
+                <p style="color: var(--muted); font-size: 0.95rem;">Developed Power BI reports analyzing trends and
+                    integrating data from multiple exchanges for a comprehensive dashboard.</p>
+                <div class="project-skills">Skills: Data Analysis, Microsoft Power BI</div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>HR Data Analysis Project</h3>
+                    <a href="https://github.com/romsha10/HRDataAnalysis" class="project-link" target="_blank">View
+                        GitHub</a>
+                </div>
+                <p style="color: var(--muted); font-size: 0.95rem;">Analyzed employee data to identify key turnover
+                    factors. Cleaned and transformed data to improve reporting efficiency by 30%.</p>
+                <div class="project-skills">Skills: Power BI, Data Cleaning, HR Analytics</div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Road Data Analysis</h3>
+                    <a href="https://github.com/romsha10/RoadAccidentDataAnalysis" class="project-link"
+                        target="_blank">View GitHub</a>
+                </div>
+                <p style="color: var(--muted); font-size: 0.95rem;">Analyzed over 300,000 records to identify high-risk
+                    zones using an interactive Power BI dashboard and Power Query.</p>
+                <div class="project-skills">Skills: Data Analysis, Power BI, Power Query</div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Health Ease</h3>
+                </div>
+                <p style="color: var(--muted); font-size: 0.95rem;">A full-stack hospital management platform featuring
+                    appointment scheduling and secure record access using the MERN stack.</p>
+                <div class="project-skills">Skills: MongoDB, Express.js, Node.js, React</div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Shoppex</h3>
+                </div>
+                <p style="color: var(--muted); font-size: 0.95rem;">Responsive e-commerce web application focusing on
+                    user-friendly interfaces and enhanced user experience.</p>
+                <div class="project-skills">Skills: HTML, CSS, JavaScript</div>
+            </div>
+        </section>
+
+        <section id="contact" class="section" style="text-align: center;">
+            <div class="sec-label">Connect</div>
+            <h2 class="sec-heading">Contact <em>Information</em></h2>
+            <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                <a href="mailto:ahlawatromsha@gmail.com" class="btn btn-primary">ahlawatromsha@gmail.com</a>
+                <a href="https://www.linkedin.com/in/romshaahlawat/" target="_blank" class="btn btn-ghost">LinkedIn
+                    Profile</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        &copy; 2026 Romsha Ahlawat
+    </footer>
+
+</body>
+
+</html>
